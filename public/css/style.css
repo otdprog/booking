@@ -1,0 +1,367 @@
+/* Глобальні стилі */
+/* Фіксований footer внизу сторінки */
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap'); /* Цікавий шрифт */
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap'); /* Новий рукописний шрифт */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: url('/image/bag.jpg') no-repeat center center fixed;
+    background-size: cover;
+    position: relative; /* Встановлюємо позицію для псевдоелемента */
+    overflow-x: hidden; /* Уникаємо горизонтальної прокрутки */
+
+}
+
+/* Псевдоелемент для затемнення та розмиття */
+/*body::before {
+    content: "";
+    position: fixed; /* Фіксоване позиціонування для охоплення всього екрану 
+    top: 0;
+    left: 0;
+    width: 100vw; /* Вся ширина вікна 
+    height: 100vh; /* Вся висота вікна 
+    background: inherit; /* Наслідуємо фон 
+    filter: blur(8px) brightness(70%); /* Розмиття + затемнення 
+    z-index: -1; /* Щоб фон був позаду контенту 
+}*/
+
+html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Навігаційне меню */
+nav {
+    background-color: #007bff;
+    padding: 10px 0;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Контейнер сторінок */
+.container {
+    margin-top: 30px;
+    position: relative; /* Щоб контент не розмивався */
+    z-index: 1; /* Піднімаємо контент над розмитим фоном */
+    padding: 20px;
+    text-align: center;
+}
+
+/* Кнопки */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+}
+
+/* Форми */
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    font-weight: bold;
+}
+
+form input,
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Таблиці */
+.table {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Футер */
+footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+}
+
+
+.content-wrapper {
+    flex: 1;
+}
+
+.btn-group {
+    display: flex;
+    gap: 5px; /* Збільшує відстань між кнопками */
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination .page-item {
+    list-style: none;
+    margin: 0 5px;
+}
+
+.pagination .page-link {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #007bff;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+}
+
+.pagination .page-link:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+.image-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.image-gallery .image-container {
+    position: relative;
+    width: 150px; /* Фіксована ширина */
+    height: 150px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.image-gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Забезпечує гарне відображення */
+    border-radius: 10px;
+}
+
+.image-gallery .delete-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.img-thumbnail {
+    width: 100%;
+    height: 200px; /* Або встановіть потрібну висоту */
+    object-fit: cover; /* Це дозволить зберігати пропорції зображення, при цьому вирізаючи частину зображення, якщо потрібно */
+}
+
+.carousel-item img {
+    width: 100%;  /* Зображення буде заповнювати ширину контейнера */
+    height: 400px;  /* Встановлює фіксовану висоту */
+    object-fit:cover;  /* Обрізає зображення, щоб воно заповнило контейнер */
+}
+
+.card {
+    height: 100%;
+}
+
+.card-body {
+    padding: 20px; /* Встановлює відступи для контенту */
+}
+
+/* Додаємо затемнення при наведенні */
+.carousel-inner {
+    position: relative;
+}
+
+.carousel-inner::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* Напівпрозоре затемнення */
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.carousel-inner:hover::after {
+    opacity: 1;
+}
+
+/* Анімація масштабування (zoom-in) */
+.carousel-item img {
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item:hover img {
+    transform: scale(1.05); /* Легке збільшення при наведенні */
+}
+
+/* Кастомні стрілки */
+.custom-carousel-control {
+    filter: invert(100%); /* Білі стрілки */
+    width: 5%;
+}
+/* Стилізація індикаторів (dots) */
+.carousel-indicators button {
+    background-color: #fff;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.carousel-indicators .active {
+    background-color: #007bff;
+    width: 12px;
+    height: 12px;
+}
+
+.booked-date {
+    display: inline-block;
+    background: red;
+    color: white;
+    padding: 5px;
+    margin: 2px;
+    border-radius: 5px;
+}
+/* Додаємо стилі для заголовків */
+h1 {
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Тінь для кращої читабельності */
+}
+
+h2, h3 {
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    font-family: 'Cinzel', serif;
+}
+
+h2 {
+    font-size: 3em;
+    position: relative;
+    z-index: 1;
+    font-family: 'Cinzel', serif;
+}
+
+h2:before {
+    content: attr(data-shadow);
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    color: rgba(0, 0, 0, 0.6);
+    z-index: -1;
+    font-family: 'Cinzel', serif;
+}
+h4 {
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    font-family: 'Dancing Script', cursive;
+}
+
+
+.nav-link {
+    background-color: #00c1c1; /* М'ятний колір */
+    color: #fff; /* Білий текст */
+    font-family: 'Quicksand', sans-serif; /* Цікавий шрифт */
+    border-radius: 5px;
+    transition: background-color 0.3s ease; /* Плавний перехід */
+    padding: 10px 20px; /* Додано трохи внутрішнього відступу для кращого вигляду */
+}
+
+.nav-link:hover {
+    background-color: #00b0b0; /* Темніший м'ятний колір при наведенні */
+    color: white; /* Білий текст при наведенні */
+}
+
+.nav-link.active {
+    background-color: #008e8e; /* Темніший м'ятний колір для активної вкладки */
+    color: white; /* Білий текст для активної вкладки */
+    font-weight: bold; /* Товстий шрифт для активної вкладки */
+    box-shadow: 0 0 10px rgba(0, 142, 142, 0.7); /* Тінь для активної вкладки */
+}
+
+div h6 {
+    font-family: 'Sacramento', cursive; /* Рукописний шрифт */
+    color: #1a73e8; /* Яскраво-синій колір, добре видно на білому фоні */
+    font-size: 22px; /* Розмір шрифта */
+    font-weight: normal; /* Тонкий шрифт */
+    text-align: center; /* Вирівнювання по центру */
+    margin: 20px 0; /* Відступи для заголовка */
+}
+
+
+
+span {
+    font-weight: normal; /* Нормальний шрифт для значень */
+    color: #007bff; /* Синій колір для тексту, щоб виділити його */
+}
+
+
+
+@media (max-width: 768px) {
+    body::before {
+        background: rgba(0, 0, 0, 0.3); /* Менше затемнення */
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+}

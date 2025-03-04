@@ -1,0 +1,277 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@600&display=swap');
+
+html {
+    height: 100%;
+}
+*, *:after, *:before {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f6f6f6;
+    font-size: 14px;
+    color: #333;
+}
+
+a {
+    color: #555;
+    text-decoration: none;
+}
+
+/* Контейнер заголовка */
+header {
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* Основний контейнер календаря */
+#calendar-wrapper {
+    max-width: 500px;
+    margin: 20px auto;
+    text-align: center;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Верхня панель (місяць, рік, навігація) */
+#custom-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ef4f69;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Навігаційні кнопки */
+.custom-nav {
+    cursor: pointer;
+    font-size: 24px;
+    color: white;
+    padding: 5px 10px;
+    transition: transform 0.2s ease-in-out, color 0.3s;
+}
+
+.custom-nav:hover {
+    transform: scale(1.2);
+    color: #ffeb99;  /* Світлий колір при наведенні */
+}
+
+/* Місяць та рік */
+#custom-month, #custom-year {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+    margin: 0 10px;
+    letter-spacing: 1px;
+}
+
+#custom-year {
+    font-size: 16px;
+    opacity: 0.8;
+}
+
+/* Основна сітка календаря */
+.fc-calendar-container {
+    width: 100%;
+    padding: 10px;
+}
+
+.fc-calendar {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Заголовок таблиці (назви днів) */
+.fc-calendar .fc-head {
+    display: flex;
+    justify-content: space-between;
+    background: #ef4f69;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px 0;
+}
+
+/* Дні тижня */
+.fc-calendar .fc-head > div {
+    flex: 1;
+    text-align: center;
+}
+
+/* Контейнер з днями місяця */
+.fc-calendar .fc-body {
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+/* Окремий рядок */
+/* Окремий рядок у календарі (фіксована висота) */
+.fc-calendar .fc-row {
+    display: flex;
+    justify-content: space-between;
+    height: 60px; /* Фіксована висота рядка */
+}
+
+/* Комірка календаря (звичайна і заброньована) */
+.fc-calendar .fc-row > div {
+    flex: 1;
+    width: 14.28%; /* 100% / 7 */
+    height: 60px; /* Фіксована висота */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    font-weight: bold;
+    position: relative; /* Для коректного позиціонування дочірніх елементів */
+}
+
+/* Поточний день (стилізація) */
+.fc-calendar .fc-row > div.fc-today {
+    background: #f7e1a5; /* теплий бежевий відтінок */
+    color: #222;
+    border-radius: 4px;
+    transform: scale(1.05);
+}
+
+/* Виділення при наведенні на день */
+.fc-calendar .fc-row > div:hover {
+    background: rgba(239, 79, 105, 0.1);
+    cursor: pointer;
+    transform: scale(1.05); /* Легке збільшення при наведенні */
+}
+
+/* Дати, що виходять за межі поточного місяця */
+.fc-calendar .fc-row > div.fc-out {
+    opacity: 0.5;
+    color: #aaa;
+}
+
+/* Стилізація місяців */
+.custom-header {
+    background: #ef4f69;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.custom-header h2 {
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* Прихований блок для анімацій */
+.custom-content-reveal {
+    background: rgba(246, 246, 246, 0.9);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0px;
+    text-align: center;
+}
+
+/* Виправлення стилів для мобільних пристроїв */
+@media screen and (max-width: 400px) {
+    #custom-month, #custom-year {
+        font-size: 18px;
+        padding: 5px;
+    }
+    
+    /* Покращення видимості днів на маленьких екранах */
+    .fc-calendar .fc-row > div {
+        font-size: 12px;
+        padding: 5px;
+    }
+
+    /* Зменшення висоти календаря для мобільних пристроїв */
+    #calendar-wrapper {
+        max-width: 100%;
+        margin: 10px auto;
+        padding: 10px;
+    }
+}
+
+/* Стилізація заброньованих дат */
+.booked-date {
+    background-color: #f5a7a0 !important; /* м'який, але насичений червоний */
+    opacity: 0.8; /* злегка зменшена прозорість, щоб колір був більш виразним */
+    border-radius: 5px;
+    cursor: not-allowed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.booked-date:hover {
+    background-color: #ffaaaa !important; /* Трохи темніший при наведенні */
+}
+
+/* Виділений діапазон дат (зелений) */
+.selected-range {
+    background-color: rgba(0, 255, 0, 0.5); /* Зелений з прозорістю */
+    color: white;
+    border-radius: 5px;
+}
+
+/* Початкова дата */
+.selected-start {
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* Кінцева дата */
+.selected-end {
+    background-color: darkgreen;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* Дата (число) всередині кожного дня */
+/* Окремий блок дати (всередині контейнера) */
+.fc-date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    color: #333333; /* графітовий колір тексту */
+}
+
+.fc-date-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fc-date.past-date {
+    color: #ccc !important;
+    pointer-events: none;
+    opacity: 0.5;
+}
