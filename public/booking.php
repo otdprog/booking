@@ -47,6 +47,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 require_once __DIR__ . '/../views/templates/header.php';
 ?>
+<div class="fixed-background"></div>
+
+<div class="scrollable-content"> <!-- Обгортка для всього контенту -->
 <div class="content-wrapper">
     <div class="container">
         <h2>Book a Room</h2>
@@ -126,5 +129,6 @@ require_once __DIR__ . '/../views/templates/header.php';
         </div>
     </div>
 </div>
-
+</div>
 <?php require_once __DIR__ . '/../views/templates/footer.php'; ?>
+</div> <!-- Закриваємо .scrollable-content -->

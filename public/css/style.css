@@ -377,7 +377,7 @@ div h6 {
     height: 12px;
 }
 .custom-booking-btn {
-    background-color: #64879a !important; /* Задаємо колір */
+    background-color: #e60024 !important; /* Задаємо колір */
     color: white !important; /* Білий текст */
     padding: 10px 20px; /* Відступи всередині */
     border-radius: 5px; /* Округлені краї */
@@ -389,7 +389,7 @@ div h6 {
 
 /* Ефект при наведенні */
 .custom-booking-btn:hover {
-    background-color: #4f6b7e !important; /* Трохи темніший колір при наведенні */
+    background-color: #cd0020 !important; /* Трохи темніший колір при наведенні */
     color: #fff !important; /* Залишаємо білий текст */
 }
 

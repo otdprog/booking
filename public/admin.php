@@ -90,6 +90,9 @@ require_once __DIR__ . '/../views/templates/header.php';
     <div class="alert alert-success"><?= htmlspecialchars($_SESSION['message']); ?></div>
     <?php unset($_SESSION['message']); ?>
 <?php endif; ?>
+<div class="fixed-background"></div>
+
+<div class="scrollable-content"> <!-- Обгортка для всього контенту -->
 <div class="content-wrapper">
     <div class="container">
     <h2>Admin Panel  <a href="logout.php" class="btn btn-danger ms-2">Logout</a></h2>
@@ -265,7 +268,7 @@ require_once __DIR__ . '/../views/templates/header.php';
 
 
     </div>
-   
+   </div>
 </div>
 </div>
 <script>
@@ -276,3 +279,4 @@ document.getElementById("toggleAddRoom").addEventListener("click", function() {
 </script>
 
 <?php require_once __DIR__ . '/../views/templates/footer.php'; ?>
+</div>
