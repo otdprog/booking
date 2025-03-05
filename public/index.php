@@ -26,8 +26,9 @@ foreach ($rooms as $room) {
 
     <div class="content-wrapper"> <!-- Додаємо обгортку для футера -->
         <div class="container text-center mt-4">
-            <h2>Welcome to the Hotel Booking System</h2>
-            <h3 class="mt-4">Available Rooms</h3>
+            <h2>Вітаємо у відпочинковій зоні</h2>
+            <h3 class="mt-4">SOSNOVA relax zone</h3>
+            <h3 class="mt-4">Будиночки для відпочинку</h3>
 
             <div class="row">
                 <?php foreach ($rooms as $room): ?>
@@ -66,8 +67,9 @@ foreach ($rooms as $room) {
                                 <h5 class="card-title">Room <?= htmlspecialchars($room['room_number']); ?></h5>
                                 <p class="card-text">Type: <?= htmlspecialchars($room['room_type']); ?></p>
                                 <p class="card-text">Price: $<?= htmlspecialchars($room['price']); ?> per night</p>
+                                <a href="booking.php?room_id=<?= $room['id']; ?>" class="btn custom-booking-btn mt-3">ЗАБРОНЮВАТИ</a>
                             </div>
-                            <a href="booking.php?room_id=<?= $room['id']; ?>" class="btn btn-primary mt-3">Book Now</a>
+                            
                         </div>
                     </div>
                 <?php endforeach; ?>

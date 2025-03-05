@@ -33,30 +33,53 @@ class BookingDAO {
     }
 
     // Фільтрація бронювань (по статусу або контакту гостя)
-    public function getFilteredBookings($limit, $offset, $status = null, $guestContact = null) {
-        $sql = "SELECT bookings.*, rooms.room_number 
-                FROM bookings 
-                LEFT JOIN rooms ON bookings.room_id = rooms.id
-                WHERE 1=1";
-        $params = [];
+public function getFilteredBookings($limit, $offset, $status = null, $guestContact = null, $sortColumn = 'id', $sortOrder = 'ASC') {
+    // Дозволені колонки для сортування
+    $allowedSortColumns = ['id', 'guest_email', 'guest_phone', 'room_number', 'check_in', 'check_out', 'status'];
 
-        if ($status) {
-            $sql .= " AND bookings.status = ?";
-            $params[] = $status;
-        }
-
-        if ($guestContact) {
-            $sql .= " AND (bookings.guest_email LIKE ? OR bookings.guest_phone LIKE ?)";
-            $params[] = "%$guestContact%";
-            $params[] = "%$guestContact%";
-        }
-
-        $sql .= " ORDER BY bookings.check_in DESC LIMIT " . (int) $limit . " OFFSET " . (int) $offset;
-
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute($params);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Сортування для `room_number`
+    if ($sortColumn === 'room_number') {
+        $sortColumn = 'rooms.room_number'; // Використовуємо колонку з таблиці rooms
     }
+    // Сортування для номера телефону як число
+    elseif ($sortColumn === 'guest_phone') {
+        $sortColumn = "CAST(bookings.guest_phone AS UNSIGNED)";
+    }
+    // Перевірка на SQL-ін'єкцію
+    elseif (!in_array($sortColumn, $allowedSortColumns)) {
+        $sortColumn = 'id';
+    }
+
+    $query = "SELECT bookings.*, rooms.room_number FROM bookings 
+              LEFT JOIN rooms ON bookings.room_id = rooms.id
+              WHERE 1=1";
+
+    if ($status) {
+        $query .= " AND bookings.status = :status";
+    }
+    if ($guestContact) {
+        $query .= " AND (bookings.guest_email LIKE :guest OR bookings.guest_phone LIKE :guest)";
+    }
+
+    // Додаємо сортування
+    $query .= " ORDER BY $sortColumn $sortOrder LIMIT :limit OFFSET :offset";
+
+    $stmt = $this->pdo->prepare($query);
+
+    if ($status) {
+        $stmt->bindParam(':status', $status);
+    }
+    if ($guestContact) {
+        $searchTerm = "%$guestContact%";
+        $stmt->bindParam(':guest', $searchTerm);
+    }
+
+    $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+    
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
     // Підтвердження бронювання адміністратором
     public function confirmBooking($bookingId) {

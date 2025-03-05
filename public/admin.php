@@ -41,16 +41,24 @@ require_once __DIR__ . '/../app/controllers/RoomController.php';
 $bookingController = new BookingController();
 $roomController = new RoomController();
 
-// Отримуємо параметри фільтрації та пагінації
+// Отримуємо параметри фільтрації, пагінації та сортування
 $filterStatus = isset($_GET['status']) ? $_GET['status'] : '';
 $filterGuestContact = isset($_GET['guest_contact']) ? $_GET['guest_contact'] : '';
 $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
-$limit = 10; // Кількість записів на сторінку
+$limit = 10;
 $offset = ($page - 1) * $limit;
 
-$bookings = $bookingController->getFilteredBookings($limit, $offset, $filterStatus, $filterGuestContact);
+// Дозволені колонки для сортування
+$allowedColumns = ['id', 'guest_email', 'guest_phone', 'room_number', 'check_in', 'check_out', 'status'];
+$sortColumn = isset($_GET['sort']) && in_array($_GET['sort'], $allowedColumns) ? $_GET['sort'] : 'id';
+$sortOrder = isset($_GET['order']) && $_GET['order'] === 'desc' ? 'DESC' : 'ASC';
+
+// Отримуємо відсортовані дані
+$bookings = $bookingController->getFilteredBookings($limit, $offset, $filterStatus, $filterGuestContact, $sortColumn, $sortOrder);
 $totalBookings = $bookingController->countBookings($filterStatus, $filterGuestContact);
 $totalPages = ($totalBookings > 0) ? ceil($totalBookings / $limit) : 1;
+
+
 $rooms = $roomController->getRooms();
 $message = "";
 
@@ -67,7 +75,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
 }
+function toggleOrder($column) {
+    $currentOrder = isset($_GET['order']) ? $_GET['order'] : 'asc';
+    $currentSort = isset($_GET['sort']) ? $_GET['sort'] : '';
 
+    if ($currentSort === $column) {
+        return $currentOrder === 'asc' ? 'desc' : 'asc';
+    }
+    return 'asc';
+}
 require_once __DIR__ . '/../views/templates/header.php';
 ?>
 <?php if (!empty($_SESSION['message'])): ?>
@@ -114,17 +130,17 @@ require_once __DIR__ . '/../views/templates/header.php';
 <div class="table-responsive">
     <table class="table table-striped">
         <thead class="table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Guest Email</th>
-                <th>Phone</th>
-                <th>Room</th>
-                <th>Check-in</th>
-                <th>Check-out</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
+    <tr>
+        <th><a href="?sort=id&order=<?= toggleOrder('id') ?>">ID</a></th>
+        <th><a href="?sort=guest_email&order=<?= toggleOrder('guest_email') ?>">Guest Email</a></th>
+        <th><a href="?sort=guest_phone&order=<?= toggleOrder('guest_phone') ?>">Phone</a></th>
+        <th><a href="?sort=room_number&order=<?= toggleOrder('room_number') ?>">Room</a></th>
+        <th><a href="?sort=check_in&order=<?= toggleOrder('check_in') ?>">Check-in</a></th>
+        <th><a href="?sort=check_out&order=<?= toggleOrder('check_out') ?>">Check-out</a></th>
+        <th><a href="?sort=status&order=<?= toggleOrder('status') ?>">Status</a></th>
+        <th>Actions</th>
+    </tr>
+</thead>
         <tbody>
             <?php foreach ($bookings as $booking): ?>
                 <tr>

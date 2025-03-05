@@ -34,9 +34,9 @@ class BookingController {
     }
 
     // Фільтровані бронювання (гостьові)
-    public function getFilteredBookings($limit, $offset, $status = null, $guestContact = null) {
-        return $this->bookingDAO->getFilteredBookings($limit, $offset, $status, $guestContact);
-    }
+public function getFilteredBookings($limit, $offset, $status = null, $guestContact = null, $sortColumn = 'id', $sortOrder = 'ASC') {
+    return $this->bookingDAO->getFilteredBookings($limit, $offset, $status, $guestContact, $sortColumn, $sortOrder);
+}
 
     // Підтвердження бронювання
 public function confirmBooking($bookingId) {

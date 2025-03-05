@@ -376,6 +376,23 @@ div h6 {
     width: 12px;
     height: 12px;
 }
+.custom-booking-btn {
+    background-color: #64879a !important; /* Задаємо колір */
+    color: white !important; /* Білий текст */
+    padding: 10px 20px; /* Відступи всередині */
+    border-radius: 5px; /* Округлені краї */
+    text-align: center; /* Центруємо текст */
+    display: inline-block; /* Залишаємо кнопку у своєму розмірі */
+    font-weight: bold; /* Жирний текст */
+    transition: background-color 0.3s ease; /* Плавний ефект зміни кольору */
+}
+
+/* Ефект при наведенні */
+.custom-booking-btn:hover {
+    background-color: #4f6b7e !important; /* Трохи темніший колір при наведенні */
+    color: #fff !important; /* Залишаємо білий текст */
+}
+
 /* Медіа-запити */
 @media (max-width: 768px) {
 

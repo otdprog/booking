@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/calendar.css?v=3.8">  
-    <link rel="stylesheet" href="/css/style.css?v=13.5">  
+    <link rel="stylesheet" href="/css/style.css?v=13.6">  
 
     <!-- FontAwesome для іконок -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -21,7 +21,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
     
     <script src="/js/calendar.js?v=4.4"></script>
-    <script src="/js/main.js?v=1.2"></script>
+    <script src="/js/main.js?v=1.5"></script>
 
 </head>
 
@@ -33,16 +33,16 @@
             <!-- Логотип + Назва сайту -->
             <a class="navbar-brand d-flex align-items-center" href="index.php">
                 <img src="../../image/logo.jpg" alt="Hotel Logo"> 
-                <span>Hotel Booking</span>
+                <span>SOSNOVA relax zone</span>
             </a>
 
             <!-- Номер телефону, Google Maps, Instagram -->
             <div class="d-flex align-items-center">
-                <a href="/docs/terms.pdf" target="_blank" class="text-light me-2">
-                    <i class="fa-solid fa-file-pdf"></i> Реквiзити та умови бронювання
+                <a href="/docs/terms.pdf" target="_blank" class="text-light me-3">
+                    <i class="fa-solid fa-file-pdf"></i> Умови бронювання
                 </a>
                 <a href="https://maps.app.goo.gl/ofHUtXQveLFUFcZ56" target="_blank" class="text-light me-3">
-                    <i class="fa-solid fa-map-marker-alt"></i> Location
+                    <i class="fa-solid fa-map-marker-alt"></i> Ми ось тут!
                 </a>
                 <a href="https://www.instagram.com/sosnova_relax_zone?igsh=bTNoY2J0OTM2MXpr" target="_blank" class="text-light">
                     <i class="fa-brands fa-instagram"></i> Instagram
