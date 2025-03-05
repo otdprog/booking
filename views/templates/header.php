@@ -1,45 +1,59 @@
 <?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Title of the Page</title>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Booking</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/calendar.css?v=3.8">  
+    <link rel="stylesheet" href="/css/style.css?v=13.5">  
 
-    <link rel="stylesheet" href="/css/calendar.css?v=3.8">  <!-- Ваш власний CSS -->
-<!--<link rel="stylesheet" href="/css/tree.css?v=2.2"> --> <!-- Ваш власний CSS -->
-        <link rel="stylesheet" href="/css/style.css?v=5.8">  <!-- Ваш власний CSS -->
+    <!-- FontAwesome для іконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-<!-- Підключення jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- Підключення Modernizr для перевірки підтримки CSS3 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-    <!-- Підключення вашого CSS стилю після Bootstrap -->
+    <!-- Підключення jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    
     <script src="/js/calendar.js?v=4.4"></script>
-    <script src="/js/main.js?v=1.1"></script>
+    <script src="/js/main.js?v=1.2"></script>
 
 </head>
+
 <body>
 
-
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <h4>
-            <a class="navbar-brand" href="index.php">Hotel Booking</a>
-            </h4>
+        <div class="container d-flex justify-content-between align-items-center">
             
+            <!-- Логотип + Назва сайту -->
+            <a class="navbar-brand d-flex align-items-center" href="index.php">
+                <img src="../../image/logo.jpg" alt="Hotel Logo"> 
+                <span>Hotel Booking</span>
+            </a>
+
+            <!-- Номер телефону, Google Maps, Instagram -->
+            <div class="d-flex align-items-center">
+                <a href="/docs/terms.pdf" target="_blank" class="text-light me-2">
+                    <i class="fa-solid fa-file-pdf"></i> Реквiзити та умови бронювання
+                </a>
+                <a href="https://maps.app.goo.gl/ofHUtXQveLFUFcZ56" target="_blank" class="text-light me-3">
+                    <i class="fa-solid fa-map-marker-alt"></i> Location
+                </a>
+                <a href="https://www.instagram.com/sosnova_relax_zone?igsh=bTNoY2J0OTM2MXpr" target="_blank" class="text-light">
+                    <i class="fa-brands fa-instagram"></i> Instagram
+                </a>
+            </div>
         </div>
-        
     </nav>
-    </body>
 
 
+
+
+
+</body>
+</html>

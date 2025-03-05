@@ -1,6 +1,7 @@
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <footer>
-        <p>&copy; <?php echo date("Y"); ?> Hotel Booking. All rights reserved.</p>
-    </footer>
-</html>
+<footer class="footer">
+    <span>
+        <i class="fa-solid fa-phone"></i> 
+        <a href="tel:+380988008866" class="text-light"> +380 98 800 88 66</a>
+   </span>
+</footer>

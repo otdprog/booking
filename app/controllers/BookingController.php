@@ -50,14 +50,27 @@ public function confirmBooking($bookingId) {
 
     // Оновлення бронювання
     public function updateBooking($data) {
-        if (!isset($data['id'], $data['check_in'], $data['check_out'], $data['status'])) {
-            return "All fields are required.";
-        }
-
-        return $this->bookingDAO->updateBooking($data['id'], $data['check_in'], $data['check_out'], $data['status'])
-            ? "Booking updated successfully!"
-            : "Failed to update booking.";
+    if (!isset($data['id'], $data['check_in'], $data['check_out'], $data['status'])) {
+        return "All fields are required.";
     }
+
+    $checkIn = $data['check_in'];
+    $checkOut = $data['check_out'];
+     if ($checkIn < date('Y-m-d')) {
+        return "Check-in date cannot be in the past.";
+    }
+    if ($checkOut < $checkIn) {
+        return "Check-out date must be after check-in date.";
+    }
+     $conflictingBookings = $this->bookingDAO->getConflictingBookings($data['id'], $checkIn, $checkOut);
+    if (!empty($conflictingBookings)) {
+        return "The selected dates are already booked. Please choose different dates.";
+    }
+
+    return $this->bookingDAO->updateBooking($data['id'], $checkIn, $checkOut, $data['status'])
+        ? "Booking updated successfully!"
+        : "Failed to update booking.";
+}
 
     // Видалення бронювання
     public function deleteBooking($id) {

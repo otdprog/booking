@@ -146,5 +146,18 @@ public function getBookingById($id) {
     $stmt->execute([$id]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
+public function getConflictingBookings($bookingId, $checkIn, $checkOut) {
+    $stmt = $this->pdo->prepare("SELECT * FROM bookings WHERE id != :bookingId AND (
+        (check_in BETWEEN :checkIn AND :checkOut) OR 
+        (check_out BETWEEN :checkIn AND :checkOut) OR 
+        (check_in <= :checkIn AND check_out >= :checkOut)
+    )");
+    $stmt->execute([
+        'bookingId' => $bookingId,
+        'checkIn' => $checkIn,
+        'checkOut' => $checkOut
+    ]);
+    return $stmt->fetchAll();
+}
 
 }

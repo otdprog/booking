@@ -111,52 +111,54 @@ require_once __DIR__ . '/../views/templates/header.php';
             </form>
 
             <!-- Таблиця бронювань -->
-            <table class="table table-striped">
-                <thead class="table-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Guest Email</th>
-                        <th>Phone</th>
-                        <th>Room</th>
-                        <th>Check-in</th>
-                        <th>Check-out</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($bookings as $booking): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($booking['id']); ?></td>
-                            <td><?= htmlspecialchars($booking['guest_email']); ?></td>
-                            <td><?= htmlspecialchars($booking['guest_phone']); ?></td>
-                            <td><?= htmlspecialchars($booking['room_number'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td><?= htmlspecialchars($booking['check_in']); ?></td>
-                            <td><?= htmlspecialchars($booking['check_out']); ?></td>
-                            <td>
-                                <span class="badge bg-<?= $booking['status'] == 'confirmed' ? 'success' : ($booking['status'] == 'cancelled' ? 'danger' : 'warning'); ?>">
-                                    <?= htmlspecialchars($booking['status']); ?>
-                                </span>
-                            </td>
-                            <td>
-    <?php if ($booking['status'] == 'pending'): ?>
-<form method="post" class="d-inline-block p-0 m-0">
-    <input type="hidden" name="confirm_booking_id" value="<?= htmlspecialchars($booking['id']); ?>">
-    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
-    <button class="btn btn-success confirm-btn" data-id="<?= $booking['id']; ?>">Confirm</button>
-</form>
-    <?php endif; ?>
-    <a href="edit-booking.php?id=<?= $booking['id']; ?>" class="btn btn-primary btn-sm">Edit</a>
-    <form method="post" action="delete-booking.php" class="d-inline-block p-0 m-0">
-    <input type="hidden" name="booking_id" value="<?= $booking['id']; ?>">
-    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
-    <button class="btn btn-danger btn-sm">Delete</button>
-</form>
-</td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Guest Email</th>
+                <th>Phone</th>
+                <th>Room</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($bookings as $booking): ?>
+                <tr>
+                    <td><?= htmlspecialchars($booking['id']); ?></td>
+                    <td><?= htmlspecialchars($booking['guest_email']); ?></td>
+                    <td><?= htmlspecialchars($booking['guest_phone']); ?></td>
+                    <td><?= htmlspecialchars($booking['room_number'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                    <td><?= htmlspecialchars($booking['check_in']); ?></td>
+                    <td><?= htmlspecialchars($booking['check_out']); ?></td>
+                    <td>
+                        <span class="badge bg-<?= $booking['status'] == 'confirmed' ? 'success' : ($booking['status'] == 'cancelled' ? 'danger' : 'warning'); ?>">
+                            <?= htmlspecialchars($booking['status']); ?>
+                        </span>
+                    </td>
+                    <td>
+                        <?php if ($booking['status'] == 'pending'): ?>
+                            <form method="post" class="d-inline-block p-0 m-0">
+                                <input type="hidden" name="confirm_booking_id" value="<?= htmlspecialchars($booking['id']); ?>">
+                                <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
+                                <button class="btn btn-success confirm-btn">Confirm</button>
+                            </form>
+                        <?php endif; ?>
+                        <a href="edit-booking.php?id=<?= $booking['id']; ?>" class="btn btn-primary btn-sm">Edit</a>
+                        <form method="post" action="delete-booking.php" class="d-inline-block p-0 m-0">
+                            <input type="hidden" name="booking_id" value="<?= $booking['id']; ?>">
+                            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
 
             <!-- Пагінація -->
 
