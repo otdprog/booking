@@ -95,11 +95,11 @@ public function getFilteredBookings($limit, $offset, $status = null, $guestConta
 }
 
     // Оновлення бронювання
-    public function updateBooking($bookingId, $checkIn, $checkOut, $status) {
-        $sql = "UPDATE bookings SET check_in = ?, check_out = ?, status = ? WHERE id = ?";
-        $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([$checkIn, $checkOut, $status, $bookingId]);
-    }
+  public function updateBooking($bookingId, $checkIn, $checkOut, $status, $adminComment) {
+    $sql = "UPDATE bookings SET check_in = ?, check_out = ?, status = ?, admin_comment = ? WHERE id = ?";
+    $stmt = $this->pdo->prepare($sql);
+    return $stmt->execute([$checkIn, $checkOut, $status, $adminComment, $bookingId]);
+}
 
     // Видалення бронювання
     public function deleteBooking($bookingId) {
@@ -193,6 +193,10 @@ public function deleteExpiredBookings() {
     $stmt = $this->pdo->prepare($sql);
     return $stmt->execute();
 }
-
+public function updateComment($bookingId, $adminComment) {
+    $sql = "UPDATE bookings SET admin_comment = ? WHERE id = ?";
+    $stmt = $this->pdo->prepare($sql);
+    return $stmt->execute([$adminComment, $bookingId]);
+}
 
 }

@@ -1,7 +1,8 @@
 /* Глобальні стилі */
 /* Фіксований footer внизу сторінки */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap'); /* Цікавий шрифт */
-    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap'); /* Новий рукописний шрифт */
+    @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300&display=swap');
 /* Глобальні стилі */
 body {
     margin: 0;
@@ -81,16 +82,29 @@ html {
     filter: brightness(1.2); /* Підсвітка логотипа */
 }
 
+
 /* Стиль для тексту поруч з логотипом */
 .navbar-brand span {
     margin-left: 10px; /* Відступ між логотипом і текстом */
     color: #fff;
-    font-weight: bold;
     text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 3px;
+    letter-spacing: 1px;
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
-    font-family: 'Dancing Script', cursive;
+}
+
+/* Стилі для тексту SOSNOVA (жирний і більший) */
+.navbar-brand .sosnova {
+    font-size: 2rem; /* Збільшуємо розмір шрифта */
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Стилі для тексту relax zone (менший і не жирний) */
+.navbar-brand .relax-zone-head {
+    font-size: 1.2rem; /* Менший шрифт */
+    font-weight: normal; /* Тонкий варіант шрифта без жирності */
+    font-family: 'Montserrat', sans-serif;
 }
 
 /* Форми */
@@ -176,41 +190,53 @@ h1 {
     font-size: 2.5rem;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Тінь для кращої читабельності */
 }
-
-h2, h3 {
+.relax-zone {
     color: #fff;
-    font-weight: bold;
+    text-align: center;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 100; /* Тонкий варіант шрифта */
+    position: relative; /* Додаємо відносне позиціонування */
+    top: -20px; /* Піднімаємо на 10px */
+}
+h3 {
+    color: #fff;
+
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 3px;
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
-    font-family: 'Cinzel', serif;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 100; /* Тонкий варіант шрифту */
 }
-
-h2 {
-    font-size: 3em;
-    position: relative;
-    z-index: 1;
-    font-family: 'Cinzel', serif;
-}
-
-h2:before {
-    content: attr(data-shadow);
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    color: rgba(0, 0, 0, 0.6);
-    z-index: -1;
-    font-family: 'Cinzel', serif;
-}
-h4 {
+.sosnova {
     color: #fff;
     font-weight: bold;
+    font-size: 3rem; /* Збільшено розмір шрифта */
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 3px;
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
-    font-family: 'Dancing Script', cursive;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.hello {
+    color: #fff;
+    text-align: center;
+
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    font-family: 'Merriweather', serif;
+    font-weight: 300; /* Встановлення Light стилю */
+}
+.home {
+    color: #fff;
+    text-align: center;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    font-family: 'Merriweather', serif;
+    font-weight: 600; /* Встановлення Light стилю */
 }
 /*admin button Rooms Booking*/
 .nav-link {
@@ -235,7 +261,7 @@ h4 {
 }
 
 div h6 {
-    font-family: 'Sacramento', cursive; /* Рукописний шрифт */
+    font-family: 'Cinzel', serif; /* Рукописний шрифт */
     color: #1a73e8; /* Яскраво-синій колір, добре видно на білому фоні */
     font-size: 22px; /* Розмір шрифта */
     font-weight: normal; /* Тонкий шрифт */

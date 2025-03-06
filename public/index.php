@@ -24,12 +24,14 @@ foreach ($rooms as $room) {
 
 <div class="scrollable-content"> <!-- Обгортка для всього контенту -->
 
-    <div class="content-wrapper"> <!-- Додаємо обгортку для футера -->
-        <div class="container text-center mt-4">
-            <h2>Вітаємо у відпочинковій зоні</h2>
-            <h3 class="mt-4">SOSNOVA relax zone</h3>
-            <h3 class="mt-4">Будиночки для відпочинку</h3>
-
+<div class="content-wrapper"> <!-- Додаємо обгортку для футера -->
+    <div class="container text-center mt-4">
+        <h4 class="hello">Вітаємо</h4>
+        <h4 class="hello">у відпочинковій зоні</h4>
+        <h2 class="sosnova">SOSNOVA</h2> <!-- Додаємо клас sosnova -->
+        <h5 class="relax-zone">relax zone</h5> <!-- Додаємо клас relax-zone -->
+        <h4 class="home">Будиночки для </h4>
+        <h4 class="home">відпочинку</h4>
             <div class="row">
                 <?php foreach ($rooms as $room): ?>
                     <div class="col-md-4 mb-4">
@@ -66,7 +68,7 @@ foreach ($rooms as $room) {
                             <div class="card-body">
                                 <h5 class="card-title">Будиночок <?= htmlspecialchars($room['room_number']); ?></h5>
                                 <p class="card-text">Кількість осіб: <?= htmlspecialchars($room['room_type']); ?></p>
-                                <p class="card-text">Ціна: $<?= htmlspecialchars($room['price']); ?> за добу</p>
+                                <p class="card-text">Ціна: <?= htmlspecialchars($room['price']); ?>грн за добу</p>
                                 <a href="booking.php?room_id=<?= $room['id']; ?>" class="btn custom-booking-btn mt-3">ЗАБРОНЮВАТИ</a>
                             </div>
                             

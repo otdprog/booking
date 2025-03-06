@@ -149,6 +149,7 @@ require_once __DIR__ . '/../views/templates/header.php';
         <th><a href="?sort=check_in&order=<?= toggleOrder('check_in') ?>">Дата заїзду</a></th>
         <th><a href="?sort=check_out&order=<?= toggleOrder('check_out') ?>">Дата виїзду</a></th>
         <th><a href="?sort=status&order=<?= toggleOrder('status') ?>">Статус</a></th>
+        <th>Коментар</th>
         <th>Дія</th>
     </tr>
 </thead>
@@ -166,6 +167,8 @@ require_once __DIR__ . '/../views/templates/header.php';
                             <?= htmlspecialchars($booking['status']); ?>
                         </span>
                     </td>
+                    <td><?= htmlspecialchars($booking['admin_comment'] ?? ''); ?></td>
+
                     <td>
                         <?php if ($booking['status'] == 'pending'): ?>
                             <form method="post" class="d-inline-block p-0 m-0">
@@ -180,6 +183,10 @@ require_once __DIR__ . '/../views/templates/header.php';
                             <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
                             <button class="btn btn-danger btn-sm">Delete</button>
                         </form>
+                        <a href="#" class="btn btn-secondary btn-sm edit-comment" data-id="<?= $booking['id']; ?>" 
+   data-comment="<?= htmlspecialchars($booking['admin_comment'] ?? ''); ?>">
+   Коментар
+</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -273,11 +280,28 @@ require_once __DIR__ . '/../views/templates/header.php';
         </tbody>
     </table>
 </div>
-
-
     </div>
    </div>
 </div>
+</div>
+            <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="commentModalLabel">Редагування коментаря</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрити"></button>
+      </div>
+      <div class="modal-body">
+        <form id="commentForm" method="post">
+          <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
+          <input type="hidden" name="booking_id" id="bookingId">
+          <label for="admin_comment">Коментар:</label>
+          <textarea id="admin_comment" name="admin_comment" class="form-control"></textarea>
+          <button type="submit" class="btn btn-primary mt-3">Зберегти</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 <script>
 document.getElementById("toggleAddRoom").addEventListener("click", function() {

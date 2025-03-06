@@ -58,6 +58,7 @@ public function updateBooking($data) {
 
     $checkIn = $data['check_in'];
     $checkOut = $data['check_out'];
+    $adminComment = $data['admin_comment'] ?? null;
 
     if ($checkIn < date('Y-m-d')) {
         return "Check-in date cannot be in the past.";
@@ -74,7 +75,7 @@ public function updateBooking($data) {
         return "The selected dates are already booked. Please choose different dates.";
     }
 
-    return $this->bookingDAO->updateBooking($data['id'], $checkIn, $checkOut, $data['status'])
+    return $this->bookingDAO->updateBooking($data['id'], $checkIn, $checkOut, $data['status'], $adminComment)
         ? "Booking updated successfully!"
         : "Failed to update booking.";
 }
@@ -99,5 +100,7 @@ public function deleteExpiredBookings() {
         ? "Expired bookings deleted successfully!"
         : "No expired bookings found or failed to delete.";
 }
-    
+    public function updateComment($bookingId, $adminComment) {
+    return $this->bookingDAO->updateComment($bookingId, $adminComment);
+}
 }

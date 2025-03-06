@@ -30,3 +30,30 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const commentModal = new bootstrap.Modal(document.getElementById("commentModal"));
+    
+    document.querySelectorAll(".edit-comment").forEach(button => {
+        button.addEventListener("click", function () {
+            document.getElementById("bookingId").value = this.dataset.id;
+            document.getElementById("admin_comment").value = this.dataset.comment;
+            commentModal.show();
+        });
+    });
+
+    document.getElementById("commentForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        fetch("update-comment.php", {
+            method: "POST",
+            body: new FormData(this),
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert(data);
+            location.reload();
+        })
+        .catch(error => console.error("Error:", error));
+    });
+});

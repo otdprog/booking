@@ -94,6 +94,8 @@ require_once __DIR__ . '/../views/templates/header.php';
         <option value="confirmed" <?= $booking['status'] == 'confirmed' ? 'selected' : ''; ?>>Confirmed</option>
         <option value="cancelled" <?= $booking['status'] == 'cancelled' ? 'selected' : ''; ?>>Cancelled</option>
     </select>
+<label for="admin_comment">Коментар менеджера:</label>
+<textarea id="admin_comment" name="admin_comment" class="form-control"><?= htmlspecialchars($booking['admin_comment'] ?? ''); ?></textarea>
 
     <button type="submit" class="btn btn-primary btn-sm">Update Booking</button>
 </form>
