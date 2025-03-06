@@ -64,9 +64,9 @@ foreach ($rooms as $room) {
                             <?php endif; ?>
 
                             <div class="card-body">
-                                <h5 class="card-title">Room <?= htmlspecialchars($room['room_number']); ?></h5>
-                                <p class="card-text">Type: <?= htmlspecialchars($room['room_type']); ?></p>
-                                <p class="card-text">Price: $<?= htmlspecialchars($room['price']); ?> per night</p>
+                                <h5 class="card-title">Будиночок <?= htmlspecialchars($room['room_number']); ?></h5>
+                                <p class="card-text">Кількість осіб: <?= htmlspecialchars($room['room_type']); ?></p>
+                                <p class="card-text">Ціна: $<?= htmlspecialchars($room['price']); ?> за добу</p>
                                 <a href="booking.php?room_id=<?= $room['id']; ?>" class="btn custom-booking-btn mt-3">ЗАБРОНЮВАТИ</a>
                             </div>
                             

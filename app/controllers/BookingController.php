@@ -49,20 +49,27 @@ public function confirmBooking($bookingId) {
 }
 
     // Оновлення бронювання
-    public function updateBooking($data) {
-    if (!isset($data['id'], $data['check_in'], $data['check_out'], $data['status'])) {
+public function updateBooking($data) {
+    error_log("updateBooking received data: " . print_r($data, true));
+
+    if (!isset($data['id'], $data['room_id'], $data['check_in'], $data['check_out'], $data['status'])) {
         return "All fields are required.";
     }
 
     $checkIn = $data['check_in'];
     $checkOut = $data['check_out'];
-     if ($checkIn < date('Y-m-d')) {
+
+    if ($checkIn < date('Y-m-d')) {
         return "Check-in date cannot be in the past.";
     }
+
     if ($checkOut < $checkIn) {
         return "Check-out date must be after check-in date.";
     }
-     $conflictingBookings = $this->bookingDAO->getConflictingBookings($data['id'], $checkIn, $checkOut);
+
+    $conflictingBookings = $this->bookingDAO->getConflictingBookings($data['id'], $data['room_id'], $checkIn, $checkOut);
+    error_log("Conflicting bookings found: " . print_r($conflictingBookings, true));
+
     if (!empty($conflictingBookings)) {
         return "The selected dates are already booked. Please choose different dates.";
     }
@@ -71,7 +78,6 @@ public function confirmBooking($bookingId) {
         ? "Booking updated successfully!"
         : "Failed to update booking.";
 }
-
     // Видалення бронювання
     public function deleteBooking($id) {
         return $this->bookingDAO->deleteBooking($id)
@@ -88,6 +94,10 @@ public function countBookings($status = null, $guestContact = null) {
 public function getBookingById($id) {
     return $this->bookingDAO->getBookingById($id);
 }
-
+public function deleteExpiredBookings() {
+    return $this->bookingDAO->deleteExpiredBookings()
+        ? "Expired bookings deleted successfully!"
+        : "No expired bookings found or failed to delete.";
+}
     
 }

@@ -77,25 +77,26 @@ require_once __DIR__ . '/../views/templates/header.php';
         </div>
     <?php endif; ?>
 
-    <form method="post">
-        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
-        <input type="hidden" name="id" value="<?= htmlspecialchars($booking['id']); ?>">
+<form method="post">
+    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
+    <input type="hidden" name="id" value="<?= htmlspecialchars($booking['id']); ?>">
+    <input type="hidden" name="room_id" value="<?= htmlspecialchars($booking['room_id']); ?>">
 
-        <label for="check_in">Check-in Date:</label>
-        <input type="date" id="check_in" name="check_in" value="<?= htmlspecialchars($booking['check_in']); ?>" required min="<?= date('Y-m-d'); ?>">
+    <label for="check_in">Check-in Date:</label>
+    <input type="date" id="check_in" name="check_in" value="<?= htmlspecialchars($booking['check_in']); ?>" required min="<?= date('Y-m-d'); ?>">
 
-        <label for="check_out">Check-out Date:</label>
-        <input type="date" id="check_out" name="check_out" value="<?= htmlspecialchars($booking['check_out']); ?>" required min="<?= date('Y-m-d'); ?>">
+    <label for="check_out">Check-out Date:</label>
+    <input type="date" id="check_out" name="check_out" value="<?= htmlspecialchars($booking['check_out']); ?>" required min="<?= date('Y-m-d'); ?>">
 
-        <label for="status">Status:</label>
-        <select id="status" name="status">
-            <option value="pending" <?= $booking['status'] == 'pending' ? 'selected' : ''; ?>>Pending</option>
-            <option value="confirmed" <?= $booking['status'] == 'confirmed' ? 'selected' : ''; ?>>Confirmed</option>
-            <option value="cancelled" <?= $booking['status'] == 'cancelled' ? 'selected' : ''; ?>>Cancelled</option>
-        </select>
+    <label for="status">Status:</label>
+    <select id="status" name="status">
+        <option value="pending" <?= $booking['status'] == 'pending' ? 'selected' : ''; ?>>Pending</option>
+        <option value="confirmed" <?= $booking['status'] == 'confirmed' ? 'selected' : ''; ?>>Confirmed</option>
+        <option value="cancelled" <?= $booking['status'] == 'cancelled' ? 'selected' : ''; ?>>Cancelled</option>
+    </select>
 
-        <button type="submit" class="btn btn-primary btn-sm">Update Booking</button>
-    </form>
+    <button type="submit" class="btn btn-primary btn-sm">Update Booking</button>
+</form>
 </div>
 </div>
 <?php require_once __DIR__ . '/../views/templates/footer.php'; ?>

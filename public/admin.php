@@ -95,7 +95,7 @@ require_once __DIR__ . '/../views/templates/header.php';
 <div class="scrollable-content"> <!-- Обгортка для всього контенту -->
 <div class="content-wrapper">
     <div class="container">
-    <h2>Admin Panel  <a href="logout.php" class="btn btn-danger ms-2">Logout</a></h2>
+    <h2>Панель адміністратора  <a href="logout.php" class="btn btn-danger ms-2">Вийти</a></h2>
 
     <?php if (!empty($message)): ?>
         <div class="alert alert-success"><?= htmlspecialchars($message); ?></div>
@@ -104,44 +104,52 @@ require_once __DIR__ . '/../views/templates/header.php';
     <!-- Навігація по вкладках -->
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link active" data-bs-toggle="tab" href="#bookings">Bookings</a>
+            <a class="nav-link active" data-bs-toggle="tab" href="#bookings">Бронювання</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#rooms">Rooms</a>
+            <a class="nav-link" data-bs-toggle="tab" href="#rooms">Будиночки</a>
         </li>
     </ul>
 
     <div class="tab-content mt-3">
         <!-- Вкладка "Bookings" -->
         <div class="tab-pane fade show active" id="bookings">
-            <h3>Guest Bookings</h3>
+            <h3>Бронювання будиночків</h3>
 
-            <!-- Форма фільтрації -->
-            <form method="get" class="mb-3 d-flex gap-2">
-                <input type="text" name="guest_contact" placeholder="Guest Email or Phone" 
-                       value="<?= htmlspecialchars($filterGuestContact ?? '', ENT_QUOTES, 'UTF-8') ?>" class="form-control">
-                <select name="status" class="form-control">
-                    <option value="">All Statuses</option>
-                    <option value="pending" <?= $filterStatus == 'pending' ? 'selected' : '' ?>>Pending</option>
-                    <option value="confirmed" <?= $filterStatus == 'confirmed' ? 'selected' : '' ?>>Confirmed</option>
-                    <option value="cancelled" <?= $filterStatus == 'cancelled' ? 'selected' : '' ?>>Cancelled</option>
-                </select>
-                <button type="submit" class="btn btn-primary">Filter</button>
-            </form>
+<!-- Форма фільтрації + Кнопка видалення в одному рядку -->
+<div class="d-flex gap-2 align-items-center mb-3">
+    <form method="get" class="d-flex gap-2 mb-0">
+        <input type="text" name="guest_contact" placeholder="Email та телефон" 
+               value="<?= htmlspecialchars($filterGuestContact ?? '', ENT_QUOTES, 'UTF-8') ?>" class="form-control">
+        <select name="status" class="form-control">
+            <option value="">Всі статуси</option>
+            <option value="pending" <?= $filterStatus == 'pending' ? 'selected' : '' ?>>Очікує підтвердження</option>
+            <option value="confirmed" <?= $filterStatus == 'confirmed' ? 'selected' : '' ?>>Підтверджено</option>
+            <option value="cancelled" <?= $filterStatus == 'cancelled' ? 'selected' : '' ?>>Скасовано</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Фільтр</button>
+    </form>
 
+    <!-- Форма для видалення (виглядає як кнопка) -->
+    <form method="post" class="p-0 m-0 border-0 bg-transparent" 
+          onsubmit="return confirm('Are you sure you want to delete all expired bookings?');">
+        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
+        <button type="submit" name="delete_expired" class="btn btn-outline-danger">Видалити прострочені</button>
+    </form>
+</div>
             <!-- Таблиця бронювань -->
 <div class="table-responsive">
     <table class="table table-striped">
         <thead class="table-dark">
     <tr>
         <th><a href="?sort=id&order=<?= toggleOrder('id') ?>">ID</a></th>
-        <th><a href="?sort=guest_email&order=<?= toggleOrder('guest_email') ?>">Guest Email</a></th>
-        <th><a href="?sort=guest_phone&order=<?= toggleOrder('guest_phone') ?>">Phone</a></th>
-        <th><a href="?sort=room_number&order=<?= toggleOrder('room_number') ?>">Room</a></th>
-        <th><a href="?sort=check_in&order=<?= toggleOrder('check_in') ?>">Check-in</a></th>
-        <th><a href="?sort=check_out&order=<?= toggleOrder('check_out') ?>">Check-out</a></th>
-        <th><a href="?sort=status&order=<?= toggleOrder('status') ?>">Status</a></th>
-        <th>Actions</th>
+        <th><a href="?sort=guest_email&order=<?= toggleOrder('guest_email') ?>">Email</a></th>
+        <th><a href="?sort=guest_phone&order=<?= toggleOrder('guest_phone') ?>">Телефон</a></th>
+        <th><a href="?sort=room_number&order=<?= toggleOrder('room_number') ?>">Будиночок</a></th>
+        <th><a href="?sort=check_in&order=<?= toggleOrder('check_in') ?>">Дата заїзду</a></th>
+        <th><a href="?sort=check_out&order=<?= toggleOrder('check_out') ?>">Дата виїзду</a></th>
+        <th><a href="?sort=status&order=<?= toggleOrder('status') ?>">Статус</a></th>
+        <th>Дія</th>
     </tr>
 </thead>
         <tbody>

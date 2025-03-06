@@ -169,18 +169,30 @@ public function getBookingById($id) {
     $stmt->execute([$id]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
-public function getConflictingBookings($bookingId, $checkIn, $checkOut) {
-    $stmt = $this->pdo->prepare("SELECT * FROM bookings WHERE id != :bookingId AND (
-        (check_in BETWEEN :checkIn AND :checkOut) OR 
-        (check_out BETWEEN :checkIn AND :checkOut) OR 
-        (check_in <= :checkIn AND check_out >= :checkOut)
-    )");
+public function getConflictingBookings($bookingId, $roomId, $checkIn, $checkOut) {
+    $sql = "SELECT * FROM bookings 
+            WHERE id != :bookingId 
+            AND room_id = :roomId
+            AND status = 'confirmed'
+            AND (
+                (check_in <= :checkOut AND check_out >= :checkIn)
+            )";
+    
+    $stmt = $this->pdo->prepare($sql);
     $stmt->execute([
         'bookingId' => $bookingId,
+        'roomId' => $roomId,
         'checkIn' => $checkIn,
         'checkOut' => $checkOut
     ]);
-    return $stmt->fetchAll();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+public function deleteExpiredBookings() {
+    $sql = "DELETE FROM bookings WHERE check_out < CURDATE()";
+    $stmt = $this->pdo->prepare($sql);
+    return $stmt->execute();
+}
+
 
 }
