@@ -95,7 +95,7 @@ require_once __DIR__ . '/../views/templates/header.php';
 <div class="scrollable-content"> <!-- Обгортка для всього контенту -->
 <div class="content-wrapper">
     <div class="container">
-    <h2>Панель адміністратора  <a href="logout.php" class="btn btn-danger ms-2">Вийти</a></h2>
+    <h2 class="sosnova">Панель адміністратора  <a href="logout.php" class="btn btn-danger ms-2">Вийти</a></h2>
 
     <?php if (!empty($message)): ?>
         <div class="alert alert-success"><?= htmlspecialchars($message); ?></div>
@@ -123,9 +123,9 @@ require_once __DIR__ . '/../views/templates/header.php';
                value="<?= htmlspecialchars($filterGuestContact ?? '', ENT_QUOTES, 'UTF-8') ?>" class="form-control">
         <select name="status" class="form-control">
             <option value="">Всі статуси</option>
-            <option value="pending" <?= $filterStatus == 'pending' ? 'selected' : '' ?>>Очікує підтвердження</option>
-            <option value="confirmed" <?= $filterStatus == 'confirmed' ? 'selected' : '' ?>>Підтверджено</option>
-            <option value="cancelled" <?= $filterStatus == 'cancelled' ? 'selected' : '' ?>>Скасовано</option>
+            <option value="Очікує" <?= $filterStatus == 'Очікує' ? 'selected' : '' ?>>Очікує підтвердження</option>
+            <option value="Готово" <?= $filterStatus == 'Готово' ? 'selected' : '' ?>>Підтверджено</option>
+            <option value="Скасовано" <?= $filterStatus == 'Скасовано' ? 'selected' : '' ?>>Скасовано</option>
         </select>
         <button type="submit" class="btn btn-primary">Фільтр</button>
     </form>
@@ -163,25 +163,25 @@ require_once __DIR__ . '/../views/templates/header.php';
                     <td><?= htmlspecialchars($booking['check_in']); ?></td>
                     <td><?= htmlspecialchars($booking['check_out']); ?></td>
                     <td>
-                        <span class="badge bg-<?= $booking['status'] == 'confirmed' ? 'success' : ($booking['status'] == 'cancelled' ? 'danger' : 'warning'); ?>">
+                        <span class="badge bg-<?= $booking['status'] == 'Готово' ? 'success' : ($booking['status'] == 'Скасовано' ? 'danger' : 'warning'); ?>">
                             <?= htmlspecialchars($booking['status']); ?>
                         </span>
                     </td>
                     <td><?= htmlspecialchars($booking['admin_comment'] ?? ''); ?></td>
 
                     <td>
-                        <?php if ($booking['status'] == 'pending'): ?>
+                        <?php if ($booking['status'] == 'Очікує'): ?>
                             <form method="post" class="d-inline-block p-0 m-0">
                                 <input type="hidden" name="confirm_booking_id" value="<?= htmlspecialchars($booking['id']); ?>">
                                 <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
-                                <button class="btn btn-success confirm-btn">Confirm</button>
+                                <button class="btn btn-success confirm-btn">Підтвердити</button>
                             </form>
                         <?php endif; ?>
-                        <a href="edit-booking.php?id=<?= $booking['id']; ?>" class="btn btn-primary btn-sm">Edit</a>
+                        <a href="edit-booking.php?id=<?= $booking['id']; ?>" class="btn btn-primary btn-sm">Редагувати</a>
                         <form method="post" action="delete-booking.php" class="d-inline-block p-0 m-0">
                             <input type="hidden" name="booking_id" value="<?= $booking['id']; ?>">
                             <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
-                            <button class="btn btn-danger btn-sm">Delete</button>
+                            <button class="btn btn-danger btn-sm">Видалити</button>
                         </form>
                         <a href="#" class="btn btn-secondary btn-sm edit-comment" data-id="<?= $booking['id']; ?>" 
    data-comment="<?= htmlspecialchars($booking['admin_comment'] ?? ''); ?>">
@@ -199,7 +199,7 @@ require_once __DIR__ . '/../views/templates/header.php';
     <ul class="pagination">
         <!-- Кнопка "Попередня" -->
         <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
-            <a class="page-link" href="?page=<?= max(1, $page - 1) ?>&status=<?= urlencode($filterStatus) ?>&guest_contact=<?= urlencode($filterGuestContact) ?>">« Prev</a>
+            <a class="page-link" href="?page=<?= max(1, $page - 1) ?>&status=<?= urlencode($filterStatus) ?>&guest_contact=<?= urlencode($filterGuestContact) ?>">« Попередня</a>
         </li>
 
         <!-- Нумерація сторінок -->
@@ -213,7 +213,7 @@ require_once __DIR__ . '/../views/templates/header.php';
 
         <!-- Кнопка "Наступна" -->
         <li class="page-item <?= ($page >= $totalPages) ? 'disabled' : '' ?>">
-            <a class="page-link" href="?page=<?= min($totalPages, $page + 1) ?>&status=<?= urlencode($filterStatus) ?>&guest_contact=<?= urlencode($filterGuestContact) ?>">Next »</a>
+            <a class="page-link" href="?page=<?= min($totalPages, $page + 1) ?>&status=<?= urlencode($filterStatus) ?>&guest_contact=<?= urlencode($filterGuestContact) ?>">Наступна »</a>
         </li>
     </ul>
 
@@ -221,32 +221,32 @@ require_once __DIR__ . '/../views/templates/header.php';
 
         <!-- Вкладка "Rooms" -->
 <div class="tab-pane fade" id="rooms">
-    <h3>Manage Rooms</h3>
-    <button id="toggleAddRoom" class="btn btn-success mb-3">Add New Room</button>
+    <h3>Керувати будиночками</h3>
+    <button id="toggleAddRoom" class="btn btn-success mb-3">Додати новий</button>
 
     <!-- Форма додавання кімнати -->
     <div id="addRoomForm"  style="display: none;">
         
-        <form method="post" enctype="multipart/form-data">
-            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
-            <label>Room Number</label>
-            <input type="text" name="room_number" class="form-control" required>
+        <form method="post" enctype="multipart/form-data" action="add-room.php">
+    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
 
-            <label>Room Type</label>
-            <select name="room_type" class="form-control">
-                <option value="single">Single</option>
-                <option value="double">Double</option>
-                <option value="suite">Suite</option>
-            </select>
+    <label>Назва будиночка</label>
+    <input type="text" name="room_number" class="form-control" required>
 
-            <label>Price per Night</label>
-            <input type="number" name="price" class="form-control" step="0.01" required>
+<label>Тип будиночка</label>
+<input type="text" name="room_type" class="form-control" required>
 
-            <label>Upload Images</label>
-            <input type="file" name="images[]" multiple class="form-control" accept="image/*">
+    <label>Ціна за добу</label>
+    <input type="number" name="price" class="form-control" step="0.01" required>
 
-            <button type="submit" class="btn btn-primary w-100 mt-3">Add Room</button>
-        </form>
+    <label>Опис</label>
+    <textarea name="description" class="form-control" required></textarea>
+
+    <label>Завантажити зображення</label>
+    <input type="file" name="images[]" multiple class="form-control" accept="image/*">
+
+    <button type="submit" class="btn btn-primary w-100 mt-3">Додати будиночок</button>
+</form>
     </div>
 
     <!-- Таблиця з кімнатами -->
@@ -254,10 +254,10 @@ require_once __DIR__ . '/../views/templates/header.php';
         <thead class="table-dark">
             <tr>
                 <th>ID</th>
-                <th>Room Number</th>
-                <th>Type</th>
-                <th>Price</th>
-                <th>Actions</th>
+                <th>Номер будиночка</th>
+                <th>Тип</th>
+                <th>Ціна</th>
+                <th>Дія</th>
             </tr>
         </thead>
         <tbody>
@@ -268,11 +268,11 @@ require_once __DIR__ . '/../views/templates/header.php';
                     <td><?= htmlspecialchars($room['room_type']); ?></td>
                     <td>$<?= htmlspecialchars($room['price']); ?></td>
                     <td>
-                        <a href="edit-room.php?id=<?= $room['id']; ?>" class="btn btn-primary btn-sm">Edit</a>
+                        <a href="edit-room.php?id=<?= $room['id']; ?>" class="btn btn-primary btn-sm">Редагувати</a>
                         <form method="post" action="delete-room.php" class="d-inline-block p-0 m-0">
                             <input type="hidden" name="room_id" value="<?= $room['id']; ?>">
                             <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
-                            <button class="btn btn-danger btn-sm">Delete</button>
+                            <button class="btn btn-danger btn-sm">Видалити</button>
                         </form>
                     </td>
                 </tr>

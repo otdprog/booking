@@ -24,18 +24,20 @@ class RoomDAO {
     }
 
     // Додавання нової кімнати
-    public function addRoom($room_number, $room_type, $price) {
-        $sql = "INSERT INTO rooms (room_number, room_type, price) VALUES (?, ?, ?)";
+    public function addRoom($room_number, $room_type, $price, $description) {
+        $sql = "INSERT INTO rooms (room_number, room_type, price, description) VALUES (?, ?, ?, ?)";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$room_number, $room_type, $price]);
-        return $this->pdo->lastInsertId();
+        return $stmt->execute([$room_number, $room_type ?? 'Невідомий', $price, $description])
+            ? $this->pdo->lastInsertId()
+            : false;
     }
 
+
     // Оновлення кімнати
-    public function updateRoom($id, $room_number, $room_type, $price) {
-        $sql = "UPDATE rooms SET room_number = ?, room_type = ?, price = ? WHERE id = ?";
+    public function updateRoom($id, $room_number, $room_type, $price, $description) {
+        $sql = "UPDATE rooms SET room_number = ?, room_type = ?, price = ?, description = ? WHERE id = ?";
         $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([$room_number, $room_type, $price, $id]);
+        return $stmt->execute([$room_number, $room_type, $price, $description, $id]);
     }
 
     // Видалення кімнати

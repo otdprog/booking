@@ -1,19 +1,33 @@
 <?php
-session_start();
-if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
-    header("Location: login.php");
-    exit;
-}
-
 require_once __DIR__ . '/../app/controllers/RoomController.php';
+require_once __DIR__ . '/../app/controllers/BookingController.php';
 
-if (!isset($_GET['id']) || empty($_GET['id'])) {
-    header("Location: admin.php?error=Invalid room ID");
-    exit;
+session_start();
+
+if (!isset($_SESSION['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    die("CSRF validation failed.");
 }
 
-$roomController = new RoomController();
-$message = $roomController->deleteRoom($_GET['id']);
+if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
+    die("Unauthorized access.");
+}
 
-header("Location: admin.php?message=" . urlencode($message));
-exit;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['room_id'])) {
+    $roomId = intval($_POST['room_id']);
+    
+    $bookingController = new BookingController();
+    $activeBookings = $bookingController->getBookedDates($roomId);
+
+    if (!empty($activeBookings)) {
+        $_SESSION['message'] = "Cannot delete room with active bookings!";
+        header("Location: admin.php");
+        exit;
+    }
+
+    $roomController = new RoomController();
+    $message = $roomController->deleteRoom($roomId);
+
+    $_SESSION['message'] = $message;
+    header("Location: admin.php");
+    exit;
+}

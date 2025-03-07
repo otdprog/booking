@@ -11,7 +11,7 @@ class BookingDAO {
     // Додавання гостьового бронювання
     public function addGuestBooking($guestEmail, $guestPhone, $roomId, $checkIn, $checkOut) {
         $sql = "INSERT INTO bookings (guest_email, guest_phone, room_id, check_in, check_out, status) 
-                VALUES (?, ?, ?, ?, ?, 'pending')";
+                VALUES (?, ?, ?, ?, ?, 'Очікує')";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([$guestEmail, $guestPhone, $roomId, $checkIn, $checkOut]);
     }
@@ -81,19 +81,41 @@ public function getFilteredBookings($limit, $offset, $status = null, $guestConta
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-    // Підтвердження бронювання адміністратором
-    public function confirmBooking($bookingId) {
-   // error_log("BookingDAO: Updating booking ID " . $bookingId);
-
-    $sql = "UPDATE bookings SET status = 'confirmed' WHERE id = ?";
+     // Підтвердження бронювання адміністратором
+public function confirmBooking($bookingId) {
+    // Отримуємо дані бронювання
+    $sql = "SELECT room_id, check_in, check_out FROM bookings WHERE id = ?";
     $stmt = $this->pdo->prepare($sql);
-    $result = $stmt->execute([$bookingId]);
+    $stmt->execute([$bookingId]);
+    $booking = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    if (!$booking) {
+        return "Booking not found.";
+    }
+
+    $roomId = $booking['room_id'];
+    $checkIn = $booking['check_in'];
+    $checkOut = $booking['check_out'];
+
+    // Перевіряємо, чи є конфліктне бронювання
+    $conflictSql = "SELECT COUNT(*) FROM bookings 
+                    WHERE room_id = ? 
+                    AND status = 'Готово' 
+                    AND id != ? 
+                    AND (check_in <= ? AND check_out >= ?)";
+    $conflictStmt = $this->pdo->prepare($conflictSql);
+    $conflictStmt->execute([$roomId, $bookingId, $checkOut, $checkIn]);
+
+    if ($conflictStmt->fetchColumn() > 0) {
+        return "Error: The room is already booked for this period.";
+    }
+
+    // Якщо конфлікту немає, оновлюємо статус бронювання
+    $updateSql = "UPDATE bookings SET status = 'Готово' WHERE id = ?";
+    $updateStmt = $this->pdo->prepare($updateSql);
     
-
-    return $result;
+    return $updateStmt->execute([$bookingId]) ? true : "Failed to confirm booking.";
 }
-
     // Оновлення бронювання
   public function updateBooking($bookingId, $checkIn, $checkOut, $status, $adminComment) {
     $sql = "UPDATE bookings SET check_in = ?, check_out = ?, status = ?, admin_comment = ? WHERE id = ?";
@@ -135,7 +157,7 @@ public function getFilteredBookings($limit, $offset, $status = null, $guestConta
     }
     
     public function getBookedDates($roomId) {
-    $sql = "SELECT check_in, check_out FROM bookings WHERE room_id = ? AND status = 'confirmed'";
+    $sql = "SELECT check_in, check_out FROM bookings WHERE room_id = ? AND status = 'Готово'";
     $stmt = $this->pdo->prepare($sql);
     $stmt->execute([$roomId]);
 
@@ -155,7 +177,7 @@ public function getFilteredBookings($limit, $offset, $status = null, $guestConta
 public function isRoomAvailable($roomId, $checkIn, $checkOut) {
     $sql = "SELECT COUNT(*) FROM bookings 
             WHERE room_id = ? 
-            AND status = 'confirmed' 
+            AND status = 'Готово' 
             AND (check_in <= ? AND check_out >= ?)";
     $stmt = $this->pdo->prepare($sql);
 
@@ -173,7 +195,7 @@ public function getConflictingBookings($bookingId, $roomId, $checkIn, $checkOut)
     $sql = "SELECT * FROM bookings 
             WHERE id != :bookingId 
             AND room_id = :roomId
-            AND status = 'confirmed'
+            AND status = 'Готово'
             AND (
                 (check_in <= :checkOut AND check_out >= :checkIn)
             )";

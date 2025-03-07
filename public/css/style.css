@@ -187,7 +187,7 @@ form select {
 
 /* Додаємо стилі для заголовків */
 h1 {
-    font-size: 2.5rem;
+    font-size: 1rem;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Тінь для кращої читабельності */
 }
 .relax-zone {
@@ -199,6 +199,12 @@ h1 {
     font-weight: 100; /* Тонкий варіант шрифта */
     position: relative; /* Додаємо відносне позиціонування */
     top: -20px; /* Піднімаємо на 10px */
+}
+.deskription{
+        color: #fff;
+    text-align: center;
+    font-size: 1rem;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Тінь для кращої читабельності */
 }
 h3 {
     color: #fff;
@@ -236,7 +242,7 @@ h3 {
     letter-spacing: 2px;
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
     font-family: 'Merriweather', serif;
-    font-weight: 600; /* Встановлення Light стилю */
+    font-weight: 300; /* Встановлення Light стилю */
 }
 /*admin button Rooms Booking*/
 .nav-link {

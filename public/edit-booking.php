@@ -69,7 +69,7 @@ require_once __DIR__ . '/../views/templates/header.php';
 ?>
 <div class="content-wrapper">
 <div class="container">
-    <h2>Edit Booking<a href="admin.php" class="btn btn-danger ms-2">Back</a></h2>
+    <h2 class="hello">Редагувати бронювання<a href="admin.php" class="btn btn-danger ms-2">Назад</a></h2>
     
     <?php if (!empty($message)): ?>
         <div class="alert alert-<?= strpos($message, 'success') !== false ? 'success' : 'danger' ?>">
@@ -82,22 +82,22 @@ require_once __DIR__ . '/../views/templates/header.php';
     <input type="hidden" name="id" value="<?= htmlspecialchars($booking['id']); ?>">
     <input type="hidden" name="room_id" value="<?= htmlspecialchars($booking['room_id']); ?>">
 
-    <label for="check_in">Check-in Date:</label>
+    <label for="check_in">Дата заїзду:</label>
     <input type="date" id="check_in" name="check_in" value="<?= htmlspecialchars($booking['check_in']); ?>" required min="<?= date('Y-m-d'); ?>">
 
-    <label for="check_out">Check-out Date:</label>
+    <label for="check_out">Дата виїзду:</label>
     <input type="date" id="check_out" name="check_out" value="<?= htmlspecialchars($booking['check_out']); ?>" required min="<?= date('Y-m-d'); ?>">
 
-    <label for="status">Status:</label>
+    <label for="status">Статус:</label>
     <select id="status" name="status">
-        <option value="pending" <?= $booking['status'] == 'pending' ? 'selected' : ''; ?>>Pending</option>
-        <option value="confirmed" <?= $booking['status'] == 'confirmed' ? 'selected' : ''; ?>>Confirmed</option>
-        <option value="cancelled" <?= $booking['status'] == 'cancelled' ? 'selected' : ''; ?>>Cancelled</option>
+        <option value="Очікує" <?= $booking['status'] == 'Очікує' ? 'selected' : ''; ?>>Очікує підтвердження</option>
+        <option value="Готово" <?= $booking['status'] == 'Готово' ? 'selected' : ''; ?>>Підтверджено</option>
+        <option value="Скасовано" <?= $booking['status'] == 'Скасовано' ? 'selected' : ''; ?>>Скасовано</option>
     </select>
 <label for="admin_comment">Коментар менеджера:</label>
 <textarea id="admin_comment" name="admin_comment" class="form-control"><?= htmlspecialchars($booking['admin_comment'] ?? ''); ?></textarea>
 
-    <button type="submit" class="btn btn-primary btn-sm">Update Booking</button>
+    <button type="submit" class="btn btn-primary btn-sm">Оновити бронювання</button>
 </form>
 </div>
 </div>

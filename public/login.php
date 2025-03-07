@@ -32,11 +32,11 @@ require_once __DIR__ . '/../views/templates/header.php';
         </div>
 
         <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
+            <label for="password" class="form-label">Пароль</label>
             <input type="password" name="password" id="password" class="form-control" required>
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">Login</button>
+        <button type="submit" class="btn btn-primary w-100">Увійти</button>
     </form>
 </div>
 </div>

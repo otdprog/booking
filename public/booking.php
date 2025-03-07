@@ -52,7 +52,7 @@ require_once __DIR__ . '/../views/templates/header.php';
 <div class="scrollable-content"> <!-- Обгортка для всього контенту -->
 <div class="content-wrapper">
     <div class="container">
-        <h2>Book a Room</h2>
+        <h2 class="hello">Бронювання будиночка</h2>
         
         <?php if (!empty($response)): ?>
             <div class="alert alert-<?= htmlspecialchars($response['status']); ?>">
@@ -62,33 +62,39 @@ require_once __DIR__ . '/../views/templates/header.php';
 
         <div class="row">
             <div class="col-md-6">
-                <?php if (!empty($roomImages)): ?>
-                    <div id="carouselBooking" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-                        <div class="carousel-inner">
-                            <?php foreach ($roomImages as $index => $image): ?>
-                                <div class="carousel-item <?= $index == 0 ? 'active' : '' ?>">
-                                    <img src="<?= htmlspecialchars($image['image_path']); ?>" class="d-block w-100" alt="Room Image">
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselBooking" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselBooking" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
+    <?php if (!empty($roomImages)): ?>
+        <div id="carouselBooking" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+            <div class="carousel-inner">
+                <?php foreach ($roomImages as $index => $image): ?>
+                    <div class="carousel-item <?= $index == 0 ? 'active' : '' ?>">
+                        <img src="<?= htmlspecialchars($image['image_path']); ?>" class="d-block w-100" alt="Room Image">
                     </div>
-                <?php else: ?>
-                    <p>No images available for this room.</p>
-                <?php endif; ?>
+                <?php endforeach; ?>
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselBooking" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselBooking" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    <?php else: ?>
+        <p>No images available for this room.</p>
+    <?php endif; ?>
+
+    <!-- Додаємо опис під каруселлю -->
+    <div class="room-description mt-3">
+        <h4 class="hello">Опис будиночка</h4>
+        <p class="deskription"><?= nl2br(htmlspecialchars($room['description'] ?? 'Опис відсутній')); ?></p>
+    </div>
+</div>
 
             <div class="col-md-6">
-                <h3><?= htmlspecialchars($room['room_number']); ?></h3>
-                <h3><p><strong>Type:</strong> <?= htmlspecialchars($room['room_type']); ?></p></h3>
-                <h3><p><strong>Price:</strong> $<?= htmlspecialchars($room['price']); ?> per night</p></h3>
+                <h3 class="hello"><p><strong>Будиночок:</strong> <?= htmlspecialchars($room['room_number']); ?></p></h3>
+                <h3 class="hello"><p><strong>Тип будиночка:</strong> <?= htmlspecialchars($room['room_type'] ?? 'Не вказано'); ?></p></h3>
+                <h3 class="hello"><p><strong>Ціна:</strong> <?= htmlspecialchars($room['price']); ?>грн За добу</p></h3>
                 
                 <form method="post">
                     <input type="hidden" name="room_id" value="<?= htmlspecialchars($room['id']); ?>">
@@ -113,17 +119,17 @@ require_once __DIR__ . '/../views/templates/header.php';
                         <input type="hidden" id="check-out" name="check_out">
                     </div>
 
-                    <h5>Guest Information</h5>
+                    <h5>Інформація для бронювання</h5>
                     <div class="mb-3">
                         <label>Email</label>
                         <input type="email" name="guest_email" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label>Phone Number</label>
+                        <label>Номер телефону</label>
                         <input type="text" name="guest_phone" class="form-control" required>
                     </div>
 
-                    <button type="submit" class="btn btn-success">Book Now</button>
+                    <button type="submit" class="btn btn-success">Забронювати</button>
                 </form>
             </div>
         </div>

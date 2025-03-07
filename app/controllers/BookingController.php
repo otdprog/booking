@@ -9,25 +9,26 @@ class BookingController {
     }
 
     public function createBooking($data) {
-    if (!isset($data['room_id'], $data['check_in'], $data['guest_email'], $data['guest_phone'])) {
-        return ['status' => 'danger', 'message' => 'All fields are required.'];
+        if (!isset($data['room_id'], $data['check_in'], $data['guest_email'], $data['guest_phone'])) {
+            return ['status' => 'danger', 'message' => 'Усі поля є обов’язковими.'];
+        }
+
+        $roomId = intval($data['room_id']);
+        $checkIn = $data['check_in'];
+        $checkOut = $data['check_out'] ?? $checkIn; // Якщо не вказано check_out, бронюємо лише один день
+
+        if (empty($checkIn) || empty($checkOut)) {
+            return ['status' => 'danger', 'message' => 'Дата заїзду та виїзду є обов’язковими!'];
+        }
+
+        if ($checkIn < date('Y-m-d')) {
+            return ['status' => 'danger', 'message' => 'Дата заїзду не може бути в минулому.'];
+        }
+
+        return $this->bookingDAO->addGuestBooking($data['guest_email'], $data['guest_phone'], $roomId, $checkIn, $checkOut)
+            ? ['status' => 'success', 'message' => 'Бронювання успішне!']
+            : ['status' => 'danger', 'message' => 'Помилка бронювання.'];
     }
-
-    $roomId = $data['room_id'];
-    $checkIn = $data['check_in'];
-    $checkOut = $data['check_out'] ?? $checkIn; // Якщо не вказано check_out, бронюємо лише один день
-
-    // Перевіряємо, чи кімната доступна
-    if (!isset($data['check_in']) || empty($data['check_in']) ||
-    !isset($data['check_out']) || empty($data['check_out'])) {
-    return ['status' => 'danger', 'message' => 'Дата заїзду та виїзду є обов’язковими!'];
-}
-
-    return $this->bookingDAO->addGuestBooking($data['guest_email'], $data['guest_phone'], $roomId, $checkIn, $checkOut)
-        ? ['status' => 'success', 'message' => 'Бронювання успішне!']
-        : ['status' => 'danger', 'message' => 'Помилка бронювання.'];
-}
-
     // Отримання всіх бронювань (для адмінки)
     public function getAllBookings() {
         return $this->bookingDAO->getAllBookings();
@@ -48,7 +49,6 @@ public function confirmBooking($bookingId) {
     return $result ? "Booking confirmed successfully!" : "Failed to confirm booking.";
 }
 
-    // Оновлення бронювання
 public function updateBooking($data) {
     error_log("updateBooking received data: " . print_r($data, true));
 
@@ -80,10 +80,10 @@ public function updateBooking($data) {
         : "Failed to update booking.";
 }
     // Видалення бронювання
-    public function deleteBooking($id) {
+ public function deleteBooking($id) {
         return $this->bookingDAO->deleteBooking($id)
-            ? "Booking deleted successfully!"
-            : "Failed to delete booking.";
+            ? "Бронювання видалено!"
+            : "Помилка видалення бронювання.";
     }
     public function getBookedDates($roomId) {
     return $this->bookingDAO->getBookedDates($roomId);

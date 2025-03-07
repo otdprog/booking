@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (data.success) {
                     location.reload();
                 } else {
-                    alert("Failed to confirm booking.");
+                    alert(data.message); // Відображаємо причину відмови (конфлікт)
                     buttonElement.disabled = false;
                 }
             })

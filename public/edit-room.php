@@ -24,31 +24,30 @@ require_once __DIR__ . '/../views/templates/header.php';
 
 <div class="content-wrapper">
 <div class="container">
-<h2>Edit Room<a href="admin.php" class="btn btn-danger ms-2">Back</a></h2>
+<h2 class="hello">Редагування будиночка<a href="admin.php" class="btn btn-danger ms-2">Назад</a></h2>
 <form method="post" enctype="multipart/form-data">
     <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
     <input type="hidden" name="room_id" value="<?= htmlspecialchars($room['id']); ?>">
 
-    <label>Room Number</label>
-    <input type="text" name="room_number" class="form-control" value="<?= htmlspecialchars($room['room_number']); ?>" required>
+    <label>Назва будиночка:</label>
+    <input type="text" name="room_number" value="<?= htmlspecialchars($room['room_number']); ?>" class="form-control" required>
 
-    <label>Room Type</label>
-    <select name="room_type" class="form-control">
-        <option value="single" <?= $room['room_type'] == 'single' ? 'selected' : ''; ?>>Single</option>
-        <option value="double" <?= $room['room_type'] == 'double' ? 'selected' : ''; ?>>Double</option>
-        <option value="suite" <?= $room['room_type'] == 'suite' ? 'selected' : ''; ?>>Suite</option>
-    </select>
+<input type="text" name="room_type" class="form-control" value="<?= htmlspecialchars($room['room_type']); ?>" required>
 
-    <label>Price per Night</label>
-    <input type="number" name="price" class="form-control" value="<?= htmlspecialchars($room['price']); ?>" step="0.01" required>
 
-    <label>Upload New Images</label>
+    <label>Ціна будиночка:</label>
+    <input type="number" name="price" value="<?= htmlspecialchars($room['price']); ?>" class="form-control" step="0.01" required>
+
+    <label>Опис:</label>
+    <textarea name="description" class="form-control" required><?= htmlspecialchars($room['description'] ?? ''); ?></textarea>
+
+    <label>Додати нові зображення:</label>
     <input type="file" name="new_images[]" multiple class="form-control" accept="image/*">
 
-    <button type="submit" class="btn btn-primary w-100 mt-3">Save Changes</button>
+    <button type="submit" class="btn btn-primary mt-3">Зберегти зміни</button>
 </form>
 
-<h3>Room Images</h3>
+<h3 class="hello">Зображення будиночка</h3>
 <div class="d-flex flex-wrap gap-3">
     <?php foreach ($images as $image): ?>
         <div class="position-relative" style="width: 250px; height: 200px; overflow: hidden;">
