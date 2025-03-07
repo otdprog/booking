@@ -11,7 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/calendar.css?v=3.8">  
-    <link rel="stylesheet" href="/css/style.css?v=18.2">  
+    <link rel="stylesheet" href="/css/style.css?v=18.8">
+     <link rel="stylesheet" href="/css/tree.css?v=1.5">
 
     <!-- FontAwesome для іконок -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -21,7 +22,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
     
     <script src="/js/calendar.js?v=4.4"></script>
-    <script src="/js/main.js?v=2.1"></script>
+    <script src="/js/main.js?v=2.8"></script>
 
 </head>
 

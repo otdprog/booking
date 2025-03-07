@@ -59,3 +59,16 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => console.error("Error:", error));
     });
 });
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(function() {
+        let alertBox = document.querySelector(".alert");
+        if (alertBox) {
+            alertBox.style.transition = "opacity 0.5s";
+            alertBox.style.opacity = "0";
+            setTimeout(() => alertBox.remove(), 500); // Видаляємо з DOM
+        }
+    }, 5000); // Час у мілісекундах (5 секунд)
+});

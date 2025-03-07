@@ -25,6 +25,10 @@ class RoomDAO {
 
     // Додавання нової кімнати
     public function addRoom($room_number, $room_type, $price, $description) {
+        // Перевіряємо, чи існує вже такий будиночок
+    if ($this->roomExists($room_number)) {
+        return "Помилка: Будиночок із таким номером вже існує!";
+    }
         $sql = "INSERT INTO rooms (room_number, room_type, price, description) VALUES (?, ?, ?, ?)";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([$room_number, $room_type ?? 'Невідомий', $price, $description])
@@ -79,4 +83,10 @@ class RoomDAO {
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([$imageId]);
     }
+    public function roomExists($roomNumber) {
+    $sql = "SELECT COUNT(*) FROM rooms WHERE room_number = ?";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([$roomNumber]);
+    return $stmt->fetchColumn() > 0;
+}
 }

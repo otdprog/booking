@@ -30,7 +30,18 @@ class RoomController {
             header("Location: admin.php");
             exit;
         }
+ $roomNumber = trim($data['room_number']);
+    $roomType = trim($data['room_type']);
+    $price = floatval($data['price']);
+    $description = trim($data['description']);
 
+    // Перевірка, чи існує будиночок
+    $roomExists = $this->roomDAO->roomExists($roomNumber);
+    if ($roomExists) {
+        $_SESSION['message'] = "Помилка: Будиночок із таким номером вже існує!";
+        header("Location: admin.php");
+        exit;
+    }
         $roomId = $this->roomDAO->addRoom($data['room_number'], $data['room_type'], $data['price'], $data['description']);
 
         if (!$roomId) {

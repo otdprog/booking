@@ -1,33 +1,19 @@
 <?php
-require_once __DIR__ . '/../app/controllers/RoomController.php';
+session_start();
 require_once __DIR__ . '/../app/controllers/BookingController.php';
 
-session_start();
+// Перевіряємо, чи запит надіслано методом POST і чи є CSRF-токен
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['booking_id'], $_POST['csrf_token'])) {
+    die("Invalid request.");
+}
 
-if (!isset($_SESSION['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+// Перевіряємо, чи CSRF-токен правильний
+if ($_POST['csrf_token'] !== $_SESSION['csrf_token']) {
     die("CSRF validation failed.");
 }
 
-if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
-    die("Unauthorized access.");
-}
+$bookingController = new BookingController();
+$message = $bookingController->deleteBooking($_POST['booking_id']);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['room_id'])) {
-    $roomId = intval($_POST['room_id']);
-    
-    $bookingController = new BookingController();
-    $activeBookings = $bookingController->getBookedDates($roomId);
-
-    if (!empty($activeBookings)) {
-        $_SESSION['message'] = "Cannot delete room with active bookings!";
-        header("Location: admin.php");
-        exit;
-    }
-
-    $roomController = new RoomController();
-    $message = $roomController->deleteRoom($roomId);
-
-    $_SESSION['message'] = $message;
-    header("Location: admin.php");
-    exit;
-}
+header("Location: admin.php?message=" . urlencode($message));
+exit;

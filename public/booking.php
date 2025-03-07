@@ -123,6 +123,7 @@ require_once __DIR__ . '/../views/templates/header.php';
                     <div class="mb-3">
                         <label>Email</label>
                         <input type="email" name="guest_email" class="form-control" required>
+                        
                     </div>
                     <div class="mb-3">
                         <label>Номер телефону</label>
