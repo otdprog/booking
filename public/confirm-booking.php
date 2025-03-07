@@ -1,6 +1,8 @@
 <?php
-require_once __DIR__ . '/../app/controllers/BookingController.php';
 session_start();
+require_once __DIR__ . '/../app/controllers/BookingController.php';
+
+header('Content-Type: application/json'); // Завжди повертаємо JSON
 
 // Перевіряємо CSRF-токен
 if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
@@ -20,8 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['booking_id'])) {
     $controller = new BookingController();
     $message = $controller->confirmBooking($bookingId);
 
-    // Якщо є конфлікт - повертаємо помилку
-    echo json_encode(['success' => $message === "Booking confirmed successfully!", 'message' => $message]);
+    // Завжди повертаємо JSON з відповіддю
+    echo json_encode([
+        'success' => $message === "Booking confirmed successfully!",
+        'message' => $message
+    ]);
     exit;
 }
 

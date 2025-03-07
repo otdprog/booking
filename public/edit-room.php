@@ -19,7 +19,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     header("Location: admin.php");
     exit;
 }
+
 require_once __DIR__ . '/../views/templates/header.php';
+if (isset($_SESSION['message'])) {
+    echo "<div class='alert alert-success'>" . $_SESSION['message'] . "</div>";
+    unset($_SESSION['message']); // Очищаємо повідомлення після відображення
+}
 ?>
 
 <div class="content-wrapper">

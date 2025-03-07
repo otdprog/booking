@@ -21,7 +21,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
     
     <script src="/js/calendar.js?v=4.4"></script>
-    <script src="/js/main.js?v=1.7"></script>
+    <script src="/js/main.js?v=2.1"></script>
 
 </head>
 

@@ -81,26 +81,26 @@ class RoomController {
     }
 
 // Оновлення кімнати
-    public function updateRoom($data, $files) {
-        if (!isset($data['room_id'], $data['room_number'], $data['room_type'], $data['price'], $data['description'])) {
-            $_SESSION['message'] = "Усі поля є обов’язковими.";
-            header("Location: edit-room.php?id=" . $data['room_id']);
-            exit;
-        }
-
-        $success = $this->roomDAO->updateRoom($data['room_id'], $data['room_number'], $data['room_type'], $data['price'], $data['description']);
-
-        if ($success && isset($files['new_images']) && !empty($files['new_images']['name'][0])) {
-            $imagePaths = $this->uploadImages($files['new_images']);
-            if (!empty($imagePaths)) {
-                $this->roomDAO->addRoomImages($data['room_id'], $imagePaths);
-            }
-        }
-
-        $_SESSION['message'] = "Кімната успішно оновлена!";
+public function updateRoom($data, $files) {
+    if (!isset($data['room_id'], $data['room_number'], $data['room_type'], $data['price'], $data['description'])) {
+        $_SESSION['message'] = "Усі поля є обов’язковими.";
         header("Location: edit-room.php?id=" . $data['room_id']);
         exit;
     }
+
+    $success = $this->roomDAO->updateRoom($data['room_id'], $data['room_number'], $data['room_type'], $data['price'], $data['description']);
+
+    if ($success && isset($files['new_images']) && !empty($files['new_images']['name'][0])) {
+        $imagePaths = $this->uploadImages($files['new_images']);
+        if (!empty($imagePaths)) {
+            $this->roomDAO->addRoomImages($data['room_id'], $imagePaths);
+        }
+    }
+
+    $_SESSION['message'] = "Кімната успішно оновлена!";
+    header("Location: edit-room.php?id=" . $data['room_id']);
+    exit;
+}
 
 // Видалення кімнати
     public function deleteRoom($id) {

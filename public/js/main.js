@@ -14,17 +14,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: `booking_id=${bookingId}&csrf_token=${csrfToken}`
             })
-            .then(response => response.json())
+            .then(response => response.json()) // Парсимо JSON
             .then(data => {
+                alert(data.message); // Виводимо будь-яке повідомлення
+
                 if (data.success) {
-                    location.reload();
+                    location.reload(); // Перезавантажуємо сторінку тільки при успіху
                 } else {
-                    alert(data.message); // Відображаємо причину відмови (конфлікт)
-                    buttonElement.disabled = false;
+                    buttonElement.disabled = false; // Вмикаємо кнопку при помилці
                 }
             })
             .catch(error => {
-                console.error("Error:", error);
+                console.error("", error);
+                alert("Помилка серверу. Спробуйте ще раз.");
                 buttonElement.disabled = false;
             });
         }

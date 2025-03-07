@@ -45,12 +45,16 @@ public function confirmBooking($bookingId) {
 
     $result = $this->bookingDAO->confirmBooking($bookingId);
 
+    if ($result !== true) {
+        error_log("Booking confirmation failed: " . $result);
+        return $result; // Якщо це помилка (конфлікт), повертаємо її
+    }
 
-    return $result ? "Booking confirmed successfully!" : "Failed to confirm booking.";
+    return "Booking confirmed successfully!";
 }
 
 public function updateBooking($data) {
-    error_log("updateBooking received data: " . print_r($data, true));
+  
 
     if (!isset($data['id'], $data['room_id'], $data['check_in'], $data['check_out'], $data['status'])) {
         return "All fields are required.";
