@@ -1,62 +1,180 @@
-.form__group {
+.custom-but {
+  --color: #00a97f;
+  padding: 0.8em 1.7em;
+  background-color: transparent;
+  border-radius: 0.3em;
   position: relative;
-  padding: 20px 0 0;
-  width: 100%;
-  max-width: 180px;
-}
-
-.form__field {
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.5s;
+  font-weight: 400;
+  font-size: 17px;
+  border: 1px solid;
   font-family: inherit;
+  text-transform: uppercase;
+  color: var(--color);
+  z-index: 1;
+}
+
+.custom-but::before,
+.custom-but::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 50px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  border-radius: 50%;
+  z-index: -1;
+  background-color: var(--color);
+  transition: 1s ease;
+}
+
+.custom-but::before {
+  top: -1em;
+  left: -1em;
+}
+
+.custom-but::after {
+  left: calc(100% + 1em);
+  top: calc(100% + 1em);
+}
+
+.custom-but:hover::before,
+.custom-but:hover::after {
+  height: 410px;
+  width: 410px;
+}
+
+.custom-but:hover {
+  color: rgb(10, 25, 30);
+}
+
+.custom-but:active {
+  filter: brightness(0.8);
+}
+.custom-but-clear {
+  --color: #ffa500;
+  padding: 0.8em 1.7em;
+  background-color: transparent;
+  border-radius: 0.3em;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.5s;
+  font-weight: 400;
+  font-size: 17px;
+  border: 1px solid;
+  font-family: inherit;
+  text-transform: uppercase;
+  color: var(--color);
+  z-index: 1;
+}
+
+.custom-but-clear::before,
+.custom-but-clear::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 50px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  border-radius: 50%;
+  z-index: -1;
+  background-color: var(--color);
+  transition: 1s ease;
+}
+
+.custom-but-clear::before {
+  top: -1em;
+  left: -1em;
+}
+
+.custom-but-clear::after {
+  left: calc(100% + 1em);
+  top: calc(100% + 1em);
+}
+
+.custom-but-clear:hover::before,
+.custom-but-clear:hover::after {
+  height: 410px;
+  width: 410px;
+}
+
+.custom-but-clear:hover {
+  color: rgb(10, 25, 30);
+}
+
+.custom-but-clear:active {
+  filter: brightness(0.8);
+}
+
+.formContainer {
+  height: 100%;
+  /* change the width here if you want */
+  width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column-reverse;
+  /* explanation: Reverse make the label appear visually above the input, when in the HTML it is below so that the "+" selector can work  */
+  gap: 10px;
+  position: relative;
+}
+
+/* This selects the label inside "formContainer*/
+.formContainer > label {
+  font-family: Basier Square;
+  font-weight: 900;
+  font-size: 15px;
+  color: rgb(99, 99, 99);
+  text-align: start;
+  align-self: flex-start;
+  transition: all 0.3s ease;
+}
+
+/* This selects the input inside "formContainer*/
+.formContainer > input {
   width: 100%;
-  border: none;
-  border-bottom: 2px solid #9b9b9b;
-  outline: 0;
-  font-size: 17px;
-  color: #fff;
-  padding: 7px 0;
-  background: transparent;
-  transition: border-color 0.2s;
+  height: 40px;
+  border-radius: 10px;
+  font-weight: 900px;
+  background-color: transparent;
+  color: rgb(99, 99, 99);
+  border: 2px solid rgb(85, 85, 85);
+  font-size: 15px;
+  font-family: Basier Square;
+  padding-left: 10px;
+  transition: all 0.3s ease;
+  z-index: 5;
 }
 
-.form__field::placeholder {
-  color: transparent;
+/* If you give the input a class, this would be equal to: 
+.input:focus */
+.formContainer > input:focus {
+  color: rgb(197, 197, 197);
+  outline: none;
+  border: 2px solid rgb(255, 255, 255);
+  box-shadow:
+    0px 0px 10px rgba(255, 255, 255, 0.145),
+    0px 0px 5px rgba(255, 255, 255, 0.145) inset;
 }
 
-.form__field:placeholder-shown ~ .form__label {
-  font-size: 17px;
-  cursor: text;
-  top: 20px;
+/* This would be equal to: .input:focus+.label */
+.formContainer > input:focus + label {
+  color: rgb(197, 197, 197);
+  text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.145);
 }
 
-.form__label {
-  position: absolute;
-  top: 0;
-  display: block;
-  transition: 0.2s;
-  font-size: 17px;
-  color: #9b9b9b;
-  pointer-events: none;
+/* This would be equal to: .input::placeholder */
+.formContainer > input::placeholder {
+  color: rgb(85, 85, 85);
+  transition: all 0.5s ease;
 }
 
-.form__field:focus {
-  padding-bottom: 6px;
-  font-weight: 700;
-  border-width: 3px;
-  border-image: linear-gradient(to right, #116399, #38caef);
-  border-image-slice: 1;
+/* This would be equal to: .input:focus::placeholder */
+.formContainer > input:focus::placeholder {
+  color: rgb(150, 150, 150);
 }
 
-.form__field:focus ~ .form__label {
-  position: absolute;
-  top: 0;
-  display: block;
-  transition: 0.2s;
-  font-size: 17px;
-  color: #38caef;
-  font-weight: 700;
-}
-
-/* reset input */
-.form__field:required, .form__field:invalid {
-  box-shadow: none;
-}
+/* <thx/> */

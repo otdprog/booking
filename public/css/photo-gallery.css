@@ -1,0 +1,22 @@
+
+
+
+
+/* Адаптивність */
+@media (max-width: 992px) {
+    .item {
+        width: 25%;
+    }
+}
+
+@media (max-width: 768px) {
+    .item {
+        width: 33.33%; /* 3 колонки */
+    }
+}
+
+@media (max-width: 576px) {
+    .item {
+        width: 50%; /* 2 колонки */
+    }
+}

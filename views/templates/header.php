@@ -11,9 +11,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/calendar.css?v=3.8">  
-    <link rel="stylesheet" href="/css/style.css?v=18.8">
-     <link rel="stylesheet" href="/css/tree.css?v=1.5">
-
+    <link rel="stylesheet" href="/css/style.css?v=20.6">
+     <link rel="stylesheet" href="/css/tree.css?v=1.7">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css">
+    
+    <link rel="stylesheet" href="/css/photo-gallery.css?v=8.2">
     <!-- FontAwesome для іконок -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
@@ -28,7 +30,7 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar">
         <div class="container d-flex justify-content-between align-items-center">
             
          <!-- Логотип + Назва сайту -->
@@ -42,11 +44,14 @@
 
             <!-- Номер телефону, Google Maps, Instagram -->
             <div class="d-flex align-items-center">
+        <a href="/photo-gallery.php" class="text-light me-3">
+        <i class="fa-sharp fa-solid fa-image"></i> Галерея
+    </a>
     <a href="/docs/terms.pdf" target="_blank" class="text-light me-3">
         <i class="fa-solid fa-file-pdf"></i> Умови бронювання
     </a>
     <a href="https://maps.app.goo.gl/ofHUtXQveLFUFcZ56" target="_blank" class="text-light me-3">
-        <i class="fa-solid fa-map-marker-alt"></i> Ми ось тут!
+        <i class="fa-solid fa-map-marker-alt"></i> Як доїхати
     </a>
     <a href="https://www.instagram.com/sosnova_relax_zone?igsh=bTNoY2J0OTM2MXpr" target="_blank" class="text-light">
         <i class="fa-brands fa-instagram"></i> Instagram

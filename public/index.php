@@ -30,8 +30,8 @@ foreach ($rooms as $room) {
         <h4 class="hello">у відпочинковій зоні</h4>
         <h2 class="sosnova">SOSNOVA</h2> <!-- Додаємо клас sosnova -->
         <h5 class="relax-zone">relax zone</h5> <!-- Додаємо клас relax-zone -->
-        <h4 class="home">Будиночки для </h4>
-        <h4 class="home">відпочинку</h4>
+        <h4 class="home">Будиночки для відпочинку</h4>
+
             <div class="row">
                 <?php foreach ($rooms as $room): ?>
                     <div class="col-md-4 mb-4">
